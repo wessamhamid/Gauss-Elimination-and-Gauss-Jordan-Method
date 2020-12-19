@@ -1,0 +1,55 @@
+#include<iostream>
+#include<iomanip>
+#include<math.h>
+using namespace std;
+int main()
+{
+    cout.precision(4); cout.setf(ios::fixed);
+    int i, j, k, num_eqns=4;
+    float a[50][50], t, x[num_eqns];
+    a[0][0]= -4; a[0][1]= -1; a[0][2]= -1; a[0][3]= 0; a[0][4]= 25;
+    a[1][0]= -1; a[1][1]= 0; a[1][2]= 4; a[1][3]= -1; a[1][4]= 75;
+    a[2][0]= -1; a[2][1]= 4; a[2][2]= 0; a[2][3]= -1; a[2][4]= 225;
+    a[3][0]= 0; a[3][1]= -1; a[3][2]= -1; a[3][3]= 4; a[3][4]= 275;
+    
+    
+    for(i=0;i<num_eqns;i++){
+        for(j=i+1;j<num_eqns;j++){
+            t=a[j][i]/a[i][i];
+            for(k=i;k<num_eqns+1;k++){
+                a[j][k]-=t*a[i][k];}}}
+				
+    cout<<"\nGauss Elimination Result:";
+    for(i=0;i<num_eqns;i++){
+            cout<<"\n";
+            for(j=0;j<num_eqns+1;j++){
+                if(j==num_eqns)
+                	cout<<" ";
+                cout<<a[i][j]<<"\t";}}
+        for(i=num_eqns-1;i>=0;i--){
+            for(j=i-1;j>=0;j--){
+                t=a[j][i]/a[i][i];
+                for(k=num_eqns;k>=i;k--){
+                    a[j][k]-=t*a[i][k];}}}
+        for(i=0;i<num_eqns;i++)
+            x[i]=0;
+        for(i=0;i<num_eqns;i++){
+            for(j=0;j<num_eqns+1;j++){
+                if(x[i]==0&&j!=num_eqns)
+                    x[i]=a[i][j];
+                if(x[i]!=0)
+                    a[i][j]/=x[i];}}
+                    
+    cout<<"\n\nGauss Jordan Result:";
+    for(i=0;i<num_eqns;i++){
+            cout<<"\n";
+            for(j=0;j<num_eqns+1;j++){
+                if(j==num_eqns)
+                    cout<<" ";
+                cout<<a[i][j]<<"\t";}}
+                
+    cout<<"\n\nSolution:\n";
+    for(i=0;i<num_eqns;i++){
+            cout<<"X"<<i+1<<" = "<<a[i][num_eqns]<<endl;}
+    return 0;
+}
